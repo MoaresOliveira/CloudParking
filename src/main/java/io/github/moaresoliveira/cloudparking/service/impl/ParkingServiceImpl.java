@@ -2,6 +2,7 @@ package io.github.moaresoliveira.cloudparking.service.impl;
 
 import io.github.moaresoliveira.cloudparking.controller.dto.ParkingDTO;
 import io.github.moaresoliveira.cloudparking.controller.mapper.ParkingMapper;
+import io.github.moaresoliveira.cloudparking.exception.ParkingNotFoundException;
 import io.github.moaresoliveira.cloudparking.model.Parking;
 import io.github.moaresoliveira.cloudparking.service.ParkingService;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,7 @@ public class ParkingServiceImpl implements ParkingService {
 
     static {
         var id = getUUID();
+        var id1 = getUUID();
         Parking parking = Parking.builder()
                 .id(id)
                 .license("ABC-123")
@@ -36,7 +38,18 @@ public class ParkingServiceImpl implements ParkingService {
                 .exitDate(LocalDateTime.now().plus(1, ChronoUnit.DAYS))
                 .bill(10.0)
                 .build();
+        Parking parking1 = Parking.builder()
+                .id(id1)
+                .license("ABC-123")
+                .state("SP")
+                .model("Fusca")
+                .color("Vermelho")
+                .entryDate(LocalDateTime.now())
+                .exitDate(LocalDateTime.now().plus(1, ChronoUnit.DAYS))
+                .bill(10.0)
+                .build();
         parkingMap.put(id, parking);
+        parkingMap.put(id1, parking);
     }
 
     @Override
@@ -47,7 +60,11 @@ public class ParkingServiceImpl implements ParkingService {
 
     @Override
     public ParkingDTO getById(String id) {
-        return null;
+        Parking parking = parkingMap.get(id);
+        if (parking == null) {
+            throw new ParkingNotFoundException(id);
+        }
+        return parkingMapper.toDTO(parking);
     }
 
     @Override
