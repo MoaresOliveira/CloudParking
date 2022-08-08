@@ -1,7 +1,8 @@
-package io.github.moaresoliveira.cloudparking.controller.mapper;
+package io.github.moaresoliveira.cloudparking.model.mapper;
 
-import io.github.moaresoliveira.cloudparking.controller.dto.ParkingDTO;
+import io.github.moaresoliveira.cloudparking.model.dto.ParkingDTO;
 import io.github.moaresoliveira.cloudparking.model.Parking;
+import io.github.moaresoliveira.cloudparking.model.form.ParkingForm;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +20,14 @@ public class ParkingMapper {
 
     public List<ParkingDTO> toDTO(List<Parking> parkings) {
         return parkings.stream().map(this::toDTO).collect(Collectors.toList());
+    }
+
+    public Parking toEntity(ParkingDTO parkingDTO) {
+        return MODEL_MAPPER.map(parkingDTO, Parking.class);
+    }
+
+    public Parking toEntity(ParkingForm parkingForm) {
+        return MODEL_MAPPER.map(parkingForm, Parking.class);
     }
 
 }

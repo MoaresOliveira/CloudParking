@@ -1,6 +1,8 @@
-package io.github.moaresoliveira.cloudparking.controller.dto;
+package io.github.moaresoliveira.cloudparking.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.Data;
 
 import java.time.LocalDateTime;
